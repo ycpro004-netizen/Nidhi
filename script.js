@@ -159,20 +159,31 @@ if(!prefersReduced){
   setTimeout(blinkCat, 1800);
 }
 
-// ===== 5. Envelope open/close =====
+// ===== 5. Envelope -> letter modal =====
 const envelope = document.getElementById('envelope');
-envelope.addEventListener('click', ()=>{
-  envelope.classList.toggle('open');
-});
-envelope.addEventListener('keydown', (e)=>{
-  if(e.key === 'Enter' || e.key === ' '){
-    e.preventDefault();
-    envelope.classList.toggle('open');
+const letterModal = document.getElementById('letter-modal');
+const letterBackdrop = document.getElementById('letter-backdrop');
+const letterClose = document.getElementById('letter-close');
+
+function openLetter(){
+  letterModal.classList.add('open');
+  document.body.classList.add('modal-locked');
+  letterClose.focus();
+}
+function closeLetter(){
+  letterModal.classList.remove('open');
+  document.body.classList.remove('modal-locked');
+  envelope.focus();
+}
+
+envelope.addEventListener('click', openLetter);
+letterClose.addEventListener('click', closeLetter);
+letterBackdrop.addEventListener('click', closeLetter);
+document.addEventListener('keydown', (e)=>{
+  if(e.key === 'Escape' && letterModal.classList.contains('open')){
+    closeLetter();
   }
 });
-envelope.setAttribute('tabindex','0');
-envelope.setAttribute('role','button');
-envelope.setAttribute('aria-label','Open the letter');
 
 // ===== 6. Interactive cat-pet blob =====
 const blob = document.getElementById('blob');

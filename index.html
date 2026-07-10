@@ -99,39 +99,42 @@
 
   <!-- ENVELOPE / LETTER CENTERPIECE -->
   <section class="section envelope-section" id="envelope-section">
-    <p class="eyebrow reveal">okay, this part is important</p>
-    <h2 class="section-title reveal">something for you to open</h2>
-    <p class="envelope-hint reveal">go on, tap it</p>
+    <p class="eyebrow reveal">this one's just for you</p>
+    <h2 class="section-title reveal">something to open</h2>
+    <p class="envelope-hint reveal">tap the envelope</p>
 
     <div class="envelope-wrap reveal">
-      <div class="envelope" id="envelope">
+      <button class="envelope" id="envelope" aria-label="Open the letter" aria-haspopup="dialog">
         <div class="envelope-back"></div>
-        <div class="letter" id="letter">
-          <div class="letter-paper">
-            <p class="letter-greeting">Nidhi,</p>
-            <p class="letter-poem">
-              If you were a season, you'd be the first warm day of spring —<br>
-              the one that makes people leave their coats at home.<br>
-              If you were a sound, you'd be the laugh that turns heads<br>
-              in a quiet room, unapologetic and alive.<br><br>
-              You walk into ordinary moments and leave them<br>
-              a little more golden than you found them.<br>
-              A cat curled in sunlight has nothing on you —<br>
-              same warmth, same quiet main-character energy,<br>
-              same total lack of interest in being anyone but yourself.<br><br>
-              So here's the truth this whole page was built to say:<br>
-              you make things better just by being in them.<br>
-              That's it. That's the poem. That's you.
-            </p>
-            <p class="letter-signoff">— for you, always</p>
-          </div>
-        </div>
-        <div class="envelope-flap" id="envelope-flap"></div>
+        <div class="envelope-flap"></div>
         <div class="envelope-front"></div>
-        <div class="envelope-seal" id="envelope-seal">♥</div>
-      </div>
+        <div class="envelope-seal">♥</div>
+      </button>
     </div>
   </section>
+
+  <!-- LETTER MODAL -->
+  <div class="letter-modal" id="letter-modal" role="dialog" aria-modal="true" aria-label="A letter for Nidhi">
+    <div class="letter-modal-backdrop" id="letter-backdrop"></div>
+    <div class="letter-modal-panel" id="letter-panel">
+      <button class="letter-close" id="letter-close" aria-label="Close letter">✕</button>
+      <div class="letter-paper">
+        <p class="letter-greeting">Nidhi,</p>
+        <p class="letter-poem">
+          If you were a season, you'd be spring —<br>
+          the first warm day after a long cold week.<br>
+          You walk into a room and it just feels<br>
+          a little easier to breathe.<br><br>
+          Like a cat finding the one sunny patch on the floor,<br>
+          you know exactly what's good and go straight for it.<br>
+          That's not a small thing. That's rare.<br><br>
+          So this whole page, really, just says one thing:<br>
+          I'm glad you're you.
+        </p>
+        <p class="letter-signoff">— for you</p>
+      </div>
+    </div>
+  </div>
 
   <!-- INTERACTIVE POP SECTION -->
   <section class="section poke" id="poke">
@@ -146,11 +149,11 @@
   <!-- FINALE -->
   <section class="section finale" id="finale">
     <div class="finale-inner">
-      <p class="eyebrow reveal">last thing, promise</p>
+      <p class="eyebrow reveal">Nidhi</p>
       <h2 class="finale-title reveal">
-        every good thing feels a little <span class="highlight">better</span><br>because you're the one it's happening with, Nidhi
+        thank you for being <span class="highlight">exactly</span> who you are.
       </h2>
-      <button class="confetti-btn reveal" id="confetti-btn">one more for you 🎉</button>
+      <button class="confetti-btn reveal" id="confetti-btn">🎉</button>
     </div>
     <canvas id="confetti-canvas"></canvas>
   </section>

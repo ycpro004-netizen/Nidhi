@@ -314,7 +314,7 @@ main{
   .cat-bubble{ font-size:1.05rem; top:-1.8rem; }
 }
 
-/* ===== ENVELOPE / LETTER ===== */
+/* ===== ENVELOPE (trigger) ===== */
 .envelope-section{ text-align:center; }
 .envelope-hint{
   font-size:.95rem;
@@ -324,7 +324,6 @@ main{
   font-style:italic;
 }
 .envelope-wrap{
-  perspective:1400px;
   width:100%;
   display:flex;
   justify-content:center;
@@ -332,12 +331,18 @@ main{
 
 .envelope{
   position:relative;
-  width:min(340px, 82vw);
-  height:230px;
+  width:min(300px, 78vw);
+  height:200px;
   cursor:pointer;
-  transition:transform .4s ease;
+  border:none;
+  background:none;
+  padding:0;
+  transition:transform .3s ease;
+  -webkit-tap-highlight-color:transparent;
 }
-.envelope:hover{ transform:translateY(-4px); }
+.envelope:hover{ transform:translateY(-4px) scale(1.02); }
+.envelope:active{ transform:translateY(0) scale(.98); }
+.envelope:focus-visible{ outline:3px solid var(--grape-deep); outline-offset:6px; border-radius:10px; }
 
 .envelope-back{
   position:absolute;
@@ -357,7 +362,7 @@ main{
   border:3px solid var(--ink);
   border-top:none;
   border-radius:0 0 10px 10px;
-  z-index:4;
+  z-index:3;
   clip-path:polygon(0 100%, 0 20%, 50% 55%, 100% 20%, 100% 100%);
 }
 
@@ -369,9 +374,7 @@ main{
   border:3px solid var(--ink);
   border-bottom:none;
   clip-path:polygon(0 0, 100% 0, 50% 92%);
-  transform-origin:top center;
-  transition:transform .7s cubic-bezier(.3,.7,.2,1);
-  z-index:5;
+  z-index:2;
   border-radius:10px 10px 0 0;
 }
 
@@ -390,27 +393,75 @@ main{
   justify-content:center;
   color:var(--pink-deep);
   font-size:1.4rem;
-  z-index:6;
-  transition:opacity .3s ease, transform .3s ease;
+  z-index:4;
 }
 
-.letter{
-  position:absolute;
-  left:50%;
-  bottom:8%;
-  width:88%;
-  max-width:640px;
-  transform:translate(-50%, 0) scale(.94);
-  z-index:2;
-  transition:transform .9s cubic-bezier(.2,.8,.2,1), bottom .9s cubic-bezier(.2,.8,.2,1);
+/* ===== LETTER MODAL (popup) ===== */
+.letter-modal{
+  position:fixed;
+  inset:0;
+  z-index:100;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:1.25rem;
 }
+.letter-modal.open{ display:flex; }
+
+.letter-modal-backdrop{
+  position:absolute;
+  inset:0;
+  background:rgba(45,42,61,.55);
+  backdrop-filter:blur(3px);
+  opacity:0;
+  transition:opacity .35s ease;
+}
+.letter-modal.open .letter-modal-backdrop{ opacity:1; }
+
+.letter-modal-panel{
+  position:relative;
+  z-index:2;
+  width:100%;
+  max-width:560px;
+  max-height:min(720px, 88vh);
+  overflow-y:auto;
+  opacity:0;
+  transform:translateY(24px) scale(.96);
+  transition:opacity .4s cubic-bezier(.2,.8,.2,1), transform .4s cubic-bezier(.2,.8,.2,1);
+}
+.letter-modal.open .letter-modal-panel{
+  opacity:1;
+  transform:translateY(0) scale(1);
+}
+
+.letter-close{
+  position:absolute;
+  top:-14px;
+  right:-14px;
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  background:var(--marigold);
+  border:3px solid var(--ink);
+  color:var(--ink);
+  font-size:1.1rem;
+  cursor:pointer;
+  z-index:3;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 4px 0 rgba(45,42,61,.2);
+  transition:transform .15s ease;
+}
+.letter-close:hover{ transform:scale(1.08); }
+.letter-close:active{ transform:scale(.95); }
 
 .letter-paper{
   background:var(--paper);
   border:3px solid var(--ink);
-  border-radius:10px;
+  border-radius:14px;
   padding:2.4rem 2.2rem;
-  box-shadow:0 10px 0 rgba(45,42,61,.12);
+  box-shadow:0 20px 45px rgba(45,42,61,.3);
   text-align:left;
 }
 
@@ -423,8 +474,8 @@ main{
 
 .letter-poem{
   font-family:var(--font-hand);
-  font-size:1.35rem;
-  line-height:1.65;
+  font-size:1.4rem;
+  line-height:1.7;
   color:var(--ink);
 }
 
@@ -436,29 +487,14 @@ main{
   text-align:right;
 }
 
-/* opened state */
-.envelope.open .envelope-flap{
-  transform:rotateX(180deg);
-  z-index:2;
-}
-.envelope.open .envelope-seal{
-  opacity:0;
-  transform:translate(-50%,-50%) scale(.5);
-}
-.envelope.open .letter{
-  bottom:92%;
-  transform:translate(-50%, 0) scale(1);
-}
-.envelope.open{ z-index:20; }
-.envelope.open .letter-paper{
-  box-shadow:0 24px 50px rgba(45,42,61,.28);
+@media (max-width: 600px){
+  .envelope{ height:180px; }
+  .letter-paper{ padding:1.8rem 1.5rem; }
+  .letter-poem{ font-size:1.2rem; }
+  .letter-close{ top:-12px; right:-8px; }
 }
 
-@media (max-width: 600px){
-  .envelope{ height:200px; }
-  .letter-paper{ padding:1.8rem 1.4rem; }
-  .letter-poem{ font-size:1.15rem; }
-}
+body.modal-locked{ overflow:hidden; }
 
 /* ===== POKE / CAT PET SECTION ===== */
 .poke{ text-align:center; }
